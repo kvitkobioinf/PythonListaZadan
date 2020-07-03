@@ -1,36 +1,42 @@
 class RomanParse:
-    def __init__(self, number):
-        self.numbers = [(1000,'M'), (900, 'CM'), (500,'D'), (400, 'CD'), (100,'C'), (90, 'XC'), (50,'L'), (40, 'XL'), (10,'X'), (9, 'IX'), (5,'V'), (4, 'IV'), (1,'I')]
-        
-        if int == type(number):
-            self.arabic = number
-            self.roman = self.arabic_to_roman()
+    def __init__(self, liczba):
+        self.numbers = [(1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'), (90, 'XC'), (50, 'L'),
+                        (40, 'XL'), (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+
+        if int == type(liczba):
+            self.arabska = liczba
+            self.rzymska = self.naArabska()
         else:
-            self.roman = number
-            self.arabic = self.roman_to_arabic()
+            self.rzymska = liczba
+            self.arabska = self.naRzymska()
 
-    def roman_to_arabic(self):
-        tot = 0
-        for i in range(0, len(self.roman)):
+    def naRzymska(self):
+        rzymska = 0
+        for i in range(0, len(self.rzymska)):
             for each in self.numbers:
-                if self.roman[i] == each[1]:
-                    if each[0] > tot:
-                        tot = each[0] - tot
+                if self.rzymska[i] == each[1]:
+                    if each[0] > rzymska:
+                        rzymska = each[0] - rzymska
                     else:
-                        tot = tot + each[0]
+                        rzymska = rzymska + each[0]
 
-        return tot
+        return rzymska
 
-    def arabic_to_roman(self):
-        arabic = self.arabic
+    def naArabska(self):
+        arabska = self.arabska
         result = ''
-        for denom, roman_digit in self.numbers:
-            result += roman_digit * int((arabic / denom))
-            arabic %= denom
+        for denom, rzymski_znak in self.numbers:
+            result += rzymski_znak * int((arabska / denom))
+            arabska %= denom
         return result
 
+
 if __name__ == "__main__":
-    num1 = RomanParse("XCV")
-    print(num1.roman, num1.arabic)
-    num2 = RomanParse(2020)
-    print(num2.roman, num2.arabic)
+    print('Konwersja na liczbę rzymską. Podaj liczbę arabską (np. 64)')
+    arabska = int(input())
+    print('Liczba rzymska: ' + RomanParse(arabska).rzymska)
+    print()
+
+    print('Konwersja na liczbę arabską. Podaj liczbę rzymską (np. IV)')
+    rzymska = input()
+    print('Liczba arabska: ' + str(RomanParse(rzymska).arabska))
